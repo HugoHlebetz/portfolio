@@ -1,0 +1,54 @@
+---
+import SectionHeader from './SectionHeader.astro';
+import ButtonLink from './ButtonLink.astro';
+import { profile } from '../data/profile';
+import { tamanhoKB, url } from '../lib/site';
+
+const { contato, curriculo } = profile;
+const kb = tamanhoKB(curriculo.arquivo);
+
+const linkExterno =
+  'group inline-flex min-h-11 items-center gap-1 text-text transition-colors duration-200 hover:text-accent';
+const seta = 'transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5';
+---
+
+<section
+  id="contato"
+  aria-labelledby="titulo-contato"
+  class="reveal relative w-full border-t border-line bg-linear-to-b from-contact-wash/30 via-bg to-bg py-24 md:py-32"
+>
+  <div class="mx-auto max-w-[1200px] px-6 md:px-10">
+    <SectionHeader index="/05" title="Contato" id="titulo-contato" />
+
+    <div class="max-w-3xl">
+      <p class="text-[32px] leading-[1.1] font-medium tracking-[-0.02em] text-balance text-text sm:text-[42px] md:text-[48px]">
+        {contato.titulo}
+      </p>
+      <p class="mt-6 max-w-[54ch] text-[17px] leading-[1.65] text-muted">{contato.texto}</p>
+
+      <div class="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4 text-[15px]">
+        <ButtonLink href={`mailto:${contato.email}`} class="max-w-full text-[14px] break-all sm:text-[15px]">
+          {contato.email}
+        </ButtonLink>
+        <a class={linkExterno} href={contato.linkedin} target="_blank" rel="noopener noreferrer">
+          LinkedIn <span class={seta} aria-hidden="true">↗</span><span class="sr-only">(abre em nova aba)</span>
+        </a>
+        <a class={linkExterno} href={contato.github} target="_blank" rel="noopener noreferrer">
+          GitHub <span class={seta} aria-hidden="true">↗</span><span class="sr-only">(abre em nova aba)</span>
+        </a>
+        {
+          kb !== undefined && (
+            <a
+              class="inline-flex min-h-11 items-center text-muted underline decoration-subtle underline-offset-4 transition-colors duration-200 hover:text-text hover:decoration-accent"
+              href={url(curriculo.arquivo)}
+              download={curriculo.nomeDownload}
+              type="application/pdf"
+            >
+              Baixar currículo (PDF,&nbsp;<span class="font-num">{kb}</span>&nbsp;KB)
+            </a>
+          )
+        }
+      </div>
+    </div>
+  </div>
+</section>

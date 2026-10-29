@@ -1,0 +1,29 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ButtonLink from '../components/ButtonLink.astro';
+import { profile } from '../data/profile';
+import { url } from '../lib/site';
+---
+
+<BaseLayout title={`Página não encontrada — ${profile.nome}`} noindex>
+  <section class="mx-auto max-w-[1200px] px-6 pt-24 pb-28 md:px-10 md:pt-36 md:pb-36">
+    <p class="animate-rise font-num text-[14px] text-accent [animation-delay:50ms]">/404</p>
+    <h1
+      class="mt-4 max-w-[16ch] animate-rise text-[44px] leading-[1.05] font-medium tracking-[-0.03em] text-text [animation-delay:120ms] sm:text-[64px] md:text-[80px]"
+    >
+      Página não encontrada
+    </h1>
+    <p class="mt-6 max-w-[48ch] animate-rise text-[18px] leading-[1.6] text-muted [animation-delay:200ms]">
+      O endereço pode ter mudado ou não existe mais.
+    </p>
+    <div class="mt-9 flex animate-rise flex-wrap items-center gap-6 [animation-delay:280ms]">
+      <ButtonLink href={url()}>Voltar ao início</ButtonLink>
+      <a
+        href={url('#projetos')}
+        class="inline-flex min-h-11 items-center text-[15px] text-text underline decoration-subtle underline-offset-4 transition-colors duration-200 hover:decoration-accent"
+      >
+        Ver projetos
+      </a>
+    </div>
+  </section>
+</BaseLayout>

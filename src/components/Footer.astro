@@ -1,0 +1,17 @@
+---
+import { profile } from '../data/profile';
+
+const ano = new Date().getFullYear();
+---
+
+<footer class="w-full border-t border-line bg-bg py-12">
+  <div
+    class="mx-auto flex max-w-[1200px] flex-col justify-between gap-4 px-6 text-[13px] text-subtle sm:flex-row sm:items-center md:px-10"
+  >
+    <p>{profile.nome} — {profile.curso}</p>
+    <p class="flex items-center gap-6">
+      <span class="font-num">{ano}</span>
+      <span>{profile.cidade}</span>
+    </p>
+  </div>
+</footer>

@@ -1,0 +1,28 @@
+---
+import SectionHeader from './SectionHeader.astro';
+import { profile } from '../data/profile';
+
+const { sobre } = profile;
+---
+
+<section id="sobre" aria-labelledby="titulo-sobre" class="reveal mx-auto max-w-[1200px] border-t border-line px-6 py-20 md:px-10">
+  <SectionHeader index="/02" title="Sobre" id="titulo-sobre" />
+
+  <div class="grid grid-cols-1 items-start gap-10 lg:grid-cols-12 lg:gap-14">
+    <div class="max-w-[66ch] space-y-4 lg:col-span-7">
+      <p class="text-[17px] leading-[1.65] text-text">{sobre.principal}</p>
+      <p class="text-[15px] leading-[1.65] text-muted">{sobre.secundario}</p>
+    </div>
+
+    <dl class="divide-y divide-line border-t border-b border-line text-[14px] lg:col-span-5">
+      {
+        sobre.tabela.map((linha) => (
+          <div class="flex justify-between gap-4 px-2 py-3.5 transition-colors duration-200 hover:bg-surface">
+            <dt class="shrink-0 text-subtle">{linha.rotulo}</dt>
+            <dd class="text-right text-text">{linha.valor}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </div>
+</section>

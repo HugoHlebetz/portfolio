@@ -1,0 +1,129 @@
+---
+import SectionHeader from './SectionHeader.astro';
+import { sites } from '../data/sites';
+import { indice, projetosOrdenados, publicado, url } from '../lib/site';
+
+const projetos = await projetosOrdenados();
+const sitesVisiveis = sites.filter((s) => s.publish);
+
+const linha = 'grid grid-cols-1 items-baseline gap-3 lg:grid-cols-12 lg:gap-6';
+const seta =
+  'text-[15px] text-muted transition-transform duration-300 ease-out group-hover:translate-x-[3px] group-hover:-translate-y-[3px] group-hover:text-accent';
+---
+
+<section id="projetos" aria-labelledby="titulo-projetos" class="reveal mx-auto max-w-[1200px] border-t border-line px-6 py-20 md:px-10">
+  <SectionHeader index="/01" title="Projetos" id="titulo-projetos" />
+
+  <ul class="divide-y divide-line border-t border-b border-line">
+    {
+      projetos.map((p, i) => {
+        const ativo = publicado(p);
+        const conteudo = (
+          <div class={linha}>
+            <span
+              class:list={[
+                'font-num text-[13px] text-subtle lg:col-span-1',
+                ativo && 'transition-colors duration-200 group-hover:text-accent',
+              ]}
+            >
+              {indice(i + 1)}
+            </span>
+            <div class="lg:col-span-4">
+              <h3
+                class:list={[
+                  'text-[19px] leading-[1.3] font-medium tracking-[-0.01em]',
+                  ativo ? 'text-text transition-colors duration-200 group-hover:text-accent' : 'text-muted',
+                ]}
+              >
+                {p.data.titulo}
+              </h3>
+              <span class="mt-1 block text-[13px] text-subtle">{p.data.cliente}</span>
+            </div>
+            <p
+              class:list={[
+                'text-[15px] leading-[1.55] lg:col-span-4',
+                ativo ? 'text-muted transition-colors duration-200 group-hover:text-text' : 'text-subtle',
+              ]}
+            >
+              {ativo ? p.data.descricao : 'Em construção.'}
+            </p>
+            <span class="text-[13px] text-subtle lg:col-span-2">{p.data.stack.join(', ')}</span>
+            <div class="flex items-center justify-between gap-2 lg:col-span-1 lg:justify-end">
+              <span class="font-num text-[13px] text-subtle">{p.data.ano}</span>
+              {ativo && (
+                <span class={seta} aria-hidden="true">
+                  ↗
+                </span>
+              )}
+            </div>
+          </div>
+        );
+
+        return (
+          <li>
+            {ativo ? (
+              <a
+                href={url(`projetos/${p.id}/`)}
+                class="group block px-2 py-7 transition-colors duration-300 ease-out hover:bg-surface md:px-4"
+              >
+                {conteudo}
+              </a>
+            ) : (
+              <div class="px-2 py-7 md:px-4">{conteudo}</div>
+            )}
+          </li>
+        );
+      })
+    }
+  </ul>
+
+  {
+    sitesVisiveis.length > 0 && (
+      <div class="mt-16">
+        <h3 class="mb-6 text-[19px] font-medium tracking-[-0.01em] text-text">Sites</h3>
+        <ul class="divide-y divide-line border-t border-b border-line">
+          {sitesVisiveis.map((s) => {
+            const conteudo = (
+              <div class={linha}>
+                <span
+                  class:list={[
+                    'text-[17px] font-medium lg:col-span-5',
+                    s.url ? 'text-text transition-colors duration-200 group-hover:text-accent' : 'text-muted',
+                  ]}
+                >
+                  {s.cliente}
+                </span>
+                <p class:list={['text-[15px] lg:col-span-5', s.url ? 'text-muted' : 'text-subtle']}>{s.descricao}</p>
+                <div class="flex items-center justify-between gap-2 lg:col-span-2 lg:justify-end">
+                  {s.ano && <span class="font-num text-[13px] text-subtle">{s.ano}</span>}
+                  {s.url && (
+                    <span class={seta} aria-hidden="true">
+                      ↗
+                    </span>
+                  )}
+                </div>
+              </div>
+            );
+            return (
+              <li>
+                {s.url ? (
+                  <a
+                    href={s.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="group block px-2 py-6 transition-colors duration-300 ease-out hover:bg-surface md:px-4"
+                  >
+                    {conteudo}
+                    <span class="sr-only">(abre em nova aba)</span>
+                  </a>
+                ) : (
+                  <div class="px-2 py-6 md:px-4">{conteudo}</div>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    )
+  }
+</section>

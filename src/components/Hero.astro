@@ -1,0 +1,73 @@
+---
+import { Image } from 'astro:assets';
+import ButtonLink from './ButtonLink.astro';
+import { profile } from '../data/profile';
+import { url } from '../lib/site';
+
+const avatares = import.meta.glob<{ default: ImageMetadata }>('../assets/hugo-memoji.{png,webp}', { eager: true });
+const avatar = Object.values(avatares)[0]?.default;
+---
+
+<section class="mx-auto max-w-[1200px] px-6 pt-20 pb-20 sm:pt-24 md:px-10 md:pt-36 md:pb-28">
+  <div class="flex max-w-4xl flex-col items-start">
+    <div
+      class="flex w-full animate-rise flex-col-reverse items-start gap-6 [animation-delay:50ms] sm:flex-row sm:items-center sm:gap-8 md:gap-10"
+    >
+      <h1
+        class="text-[64px] leading-[0.92] font-medium tracking-[-0.035em] text-text sm:text-[80px] sm:whitespace-nowrap md:text-[104px] lg:text-[124px]"
+      >
+        {profile.nome}
+      </h1>
+      {
+        avatar && (
+          <Image
+            src={avatar}
+            alt={profile.avatarAlt}
+            widths={[112, 144, 176, 208, 416]}
+            sizes="(min-width: 1024px) 208px, (min-width: 768px) 176px, (min-width: 640px) 144px, 112px"
+            loading="eager"
+            fetchpriority="high"
+            class="h-auto w-28 shrink-0 object-contain select-none sm:w-36 md:w-44 lg:w-52"
+          />
+        )
+      }
+    </div>
+
+    <p
+      class="mt-8 max-w-[42ch] animate-rise text-[18px] leading-[1.6] text-text [animation-delay:180ms] sm:text-[21px] md:text-[23px]"
+    >
+      {profile.frase}
+    </p>
+    <p class="mt-4 animate-rise text-[14px] text-muted [animation-delay:280ms]">{profile.status}</p>
+
+    <div class="mt-9 flex animate-rise items-center gap-6 [animation-delay:380ms]">
+      <ButtonLink href={url('#projetos')}>Ver projetos</ButtonLink>
+      <a
+        href={url('#contato')}
+        class="inline-flex min-h-11 items-center text-[15px] text-text underline decoration-subtle underline-offset-4 transition-colors duration-200 hover:decoration-accent"
+      >
+        Contato
+      </a>
+    </div>
+  </div>
+
+  <dl
+    class="mt-24 grid animate-rise grid-cols-1 divide-y divide-line border-t border-line pt-12 [animation-delay:480ms] sm:grid-cols-3 sm:divide-x sm:divide-y-0"
+  >
+    {
+      profile.numeros.map((n, i) => (
+        <div class="flex flex-col py-4 sm:py-0 sm:first:pr-8 sm:last:pl-8 sm:[&:not(:first-child):not(:last-child)]:px-8">
+          <dt class="order-2 mt-2 text-[14px] text-muted">{n.legenda}</dt>
+          <dd
+            class:list={[
+              'order-1 font-num text-[44px] leading-none tracking-[-0.02em] md:text-[50px]',
+              i === 0 ? 'text-accent' : 'text-text',
+            ]}
+          >
+            {n.valor}
+          </dd>
+        </div>
+      ))
+    }
+  </dl>
+</section>
