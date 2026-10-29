@@ -73,6 +73,24 @@
   font-variant-numeric: tabular-nums;
 }
 
+.hero-bg {
+  opacity: 0.6;
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0%, #000 35%),
+    linear-gradient(to bottom, #000 0%, #000 70%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent 0%, #000 35%),
+    linear-gradient(to bottom, #000 0%, #000 70%, transparent 100%);
+  mask-composite: intersect;
+}
+
+@media (max-width: 47.99rem) {
+  .hero-bg {
+    opacity: 0.3;
+  }
+}
+
 @utility nav-link {
   position: relative;
   transition: color 0.25s var(--ease-out-expo);
