@@ -1,15 +1,15 @@
-# hugohlebetz.github.io
+# Portfólio
 
 Meu portfólio pessoal: projetos, experiência e contato. Estudo Sistemas de Informação e trabalho com dados e indicadores.
 
-Site no ar: https://hugohlebetz.github.io
+Site no ar: https://portfolio-hugo-hlebetz.vercel.app
 
 ## Stack
 
 - [Astro](https://astro.build) — site estático
 - [Tailwind CSS](https://tailwindcss.com) 4
 - Fontes Geist e Geist Mono auto-hospedadas
-- Deploy no GitHub Pages via GitHub Actions
+- Deploy na Vercel
 
 ## Como rodar
 
